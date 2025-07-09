@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace dayemsiddiqui\Saga\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class SagaCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-saga';
 
     public $description = 'My command';
 
