@@ -2,9 +2,9 @@
 
 namespace dayemsiddiqui\Saga;
 
+use dayemsiddiqui\Saga\Commands\SagaCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use dayemsiddiqui\Saga\Commands\SagaCommand;
 
 class SagaServiceProvider extends PackageServiceProvider
 {
