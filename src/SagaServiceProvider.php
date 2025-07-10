@@ -2,6 +2,7 @@
 
 namespace dayemsiddiqui\Saga;
 
+use dayemsiddiqui\Saga\Commands\MakeSagaStepCommand;
 use dayemsiddiqui\Saga\Commands\SagaCommand;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -28,6 +29,7 @@ class SagaServiceProvider extends PackageServiceProvider
             ->discoversMigrations()
             ->runsMigrations()
             ->hasCommand(SagaCommand::class)
+            ->hasCommand(MakeSagaStepCommand::class)
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()

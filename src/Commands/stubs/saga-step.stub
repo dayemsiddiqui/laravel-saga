@@ -1,0 +1,24 @@
+<?php
+
+namespace {{ namespace }};
+
+use dayemsiddiqui\Saga\SagaStep;
+
+class {{ class }} extends SagaStep
+{
+    /**
+     * Execute the saga step.
+     *
+     * @return void
+     */
+    protected function run(): void
+    {
+        // TODO: Implement your saga step logic here
+        
+        // You can access the context to share data between steps:
+        // $this->context()->set('key', 'value');
+        // $value = $this->context()->get('key');
+        
+        // Your business logic goes here...
+    }
+} 
