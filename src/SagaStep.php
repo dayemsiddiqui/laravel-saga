@@ -1,12 +1,14 @@
 <?php
+
 namespace dayemsiddiqui\Saga;
 
+use dayemsiddiqui\Saga\Models\SagaStep as SagaStepModel;
+use dayemsiddiqui\Saga\Models\SagaStepStatus;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Queueable;
 use Illuminate\Queue\SerializesModels;
-use dayemsiddiqui\Saga\Models\SagaStep as SagaStepModel;
 use Throwable;
 
 abstract class SagaStep implements ShouldQueue
@@ -14,6 +16,7 @@ abstract class SagaStep implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public SagaStepModel $step;
+
     protected SagaContext $context;
 
     public function __construct(SagaStepModel $step)
@@ -34,17 +37,17 @@ abstract class SagaStep implements ShouldQueue
 
     public function handle()
     {
-        $this->step->update(['status' => 'processing']);
+        $this->step->setStatus(SagaStepStatus::STARTED);
+        $this->step->save();
 
         try {
             $this->run();
-            $this->step->update(['status' => 'success']);
+            $this->step->setStatus(SagaStepStatus::COMPLETED);
+            $this->step->save();
         } catch (Throwable $e) {
-            $this->step->update([
-                'status' => 'failed',
-                'error_message' => $e->getMessage(),
-            ]);
-            $this->step->sagaRun->update(['status' => 'failed']);
+            $this->step->setStatus(SagaStepStatus::FAILED);
+            $this->step->error_message = $e->getMessage();
+            $this->step->save();
             throw $e;
         }
     }

@@ -24,7 +24,7 @@ class SagaStep extends Model
 
     public function sagaRun(): BelongsTo
     {
-        return $this->belongsTo(SagaRun::class);
+        return $this->belongsTo(SagaRun::class, 'saga_run_id');
     }
 
     public function setStatus(SagaStepStatus $status): void
