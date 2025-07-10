@@ -4,7 +4,6 @@ namespace dayemsiddiqui\Saga\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use dayemsiddiqui\Saga\Models\SagaStepStatus;   
 
 /**
  * @property int $id
@@ -28,9 +27,6 @@ class SagaRun extends Model
         return $this->hasMany(SagaStep::class);
     }
 
-    /**
-     * @return SagaStep|null
-     */
     public function currentStep(): ?SagaStep
     {
         $step = $this->steps()->where('status', SagaStepStatus::PENDING)->first();
