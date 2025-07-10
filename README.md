@@ -21,7 +21,7 @@ You can install the package via composer:
 
 ```bash
 composer require dayemsiddiqui/laravel-saga
-php artisan your-package-name:install
+php artisan saga:install
 ```
 
 And then you can run:
