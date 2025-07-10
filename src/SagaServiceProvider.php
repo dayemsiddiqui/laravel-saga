@@ -3,6 +3,7 @@
 namespace dayemsiddiqui\Saga;
 
 use dayemsiddiqui\Saga\Commands\SagaCommand;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -24,10 +25,17 @@ class SagaServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-saga')
-            ->hasMigration('create_saga_runs_table')
-            ->hasMigration('create_saga_steps_table')
             ->discoversMigrations()
             ->runsMigrations()
-            ->hasCommand(SagaCommand::class);
+            ->hasCommand(SagaCommand::class)
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishAssets()
+                    ->publishMigrations()
+                    ->askToRunMigrations()
+                    ->copyAndRegisterServiceProviderInApp()
+                    ->askToStarRepoOnGitHub('dayemsiddiqui/laravel-saga');
+            });
     }
 }
