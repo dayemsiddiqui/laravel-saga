@@ -21,6 +21,7 @@ class TestCase extends Orchestra
     {
         return [
             SagaServiceProvider::class,
+            \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         ];
     }
 
