@@ -25,8 +25,8 @@ class SagaServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-saga')
             ->hasMigrations([
-                '2024_01_01_000000_create_saga_runs_table',
-                '2024_01_01_000001_create_saga_steps_table',
+                'create_saga_runs_table',
+                'create_saga_steps_table',
             ])
             ->hasCommand(SagaCommand::class);
     }
