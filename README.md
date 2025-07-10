@@ -23,10 +23,9 @@ You can install the package via composer:
 composer require dayemsiddiqui/laravel-saga
 ```
 
-You can publish and run the migrations with:
+The migrations will run automatically when you install the package. If you need to run them manually, you can use:
 
 ```bash
-php artisan vendor:publish --tag="laravel-saga-migrations"
 php artisan migrate
 ```
 

@@ -32,7 +32,6 @@ class SagaServiceProvider extends PackageServiceProvider
                 $command
                     ->publishConfigFile()
                     ->publishAssets()
-                    ->publishMigrations()
                     ->askToRunMigrations()
                     ->copyAndRegisterServiceProviderInApp()
                     ->askToStarRepoOnGitHub('dayemsiddiqui/laravel-saga');
