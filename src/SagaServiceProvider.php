@@ -8,6 +8,12 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class SagaServiceProvider extends PackageServiceProvider
 {
+    public function packageRegistered()
+    {
+        $this->app->singleton(Saga::class, function ($app) {
+            return new Saga();
+        });
+    }
     public function configurePackage(Package $package): void
     {
         /*
@@ -19,7 +25,8 @@ class SagaServiceProvider extends PackageServiceProvider
             ->name('laravel-saga')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel_saga_table')
+            ->hasMigration('create_saga_runs_table')
+            ->hasMigration('create_saga_steps_table')
             ->hasCommand(SagaCommand::class);
     }
 }
