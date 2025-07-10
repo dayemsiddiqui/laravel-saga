@@ -21,18 +21,23 @@ class TestCase extends Orchestra
     {
         return [
             SagaServiceProvider::class,
-            \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+            \Illuminate\Queue\QueueServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        $migration = include __DIR__.'/../database/migrations/create_saga_runs_table.php';
+        $migration->up();
+
+        $migration = include __DIR__.'/../database/migrations/create_saga_steps_table.php';
+        $migration->up();
     }
 }

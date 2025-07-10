@@ -3,6 +3,7 @@
 namespace dayemsiddiqui\Saga;
 
 use dayemsiddiqui\Saga\Models\SagaRun;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Bus;
 
 class Saga
@@ -14,9 +15,17 @@ class Saga
 
     protected ?SagaRun $sagaRun = null;
 
+    public static function fake(): SagaFake
+    {
+        $fake = new SagaFake;
+        App::singleton(Saga::class, fn () => $fake);
+
+        return $fake;
+    }
+
     public static function named(string $name): self
     {
-        $instance = new self;
+        $instance = App::make(Saga::class) instanceof SagaFake ? App::make(Saga::class) : new self;
         $instance->name = $name;
 
         return $instance;
@@ -53,11 +62,10 @@ class Saga
             return new $jobClass($step);
         })->all();
 
-        Bus::chain($jobs)
-            ->after(fn () => $this->sagaRun->update(['status' => 'completed']))
-            ->catch(fn () => $this->sagaRun->update(['status' => 'failed']))
-            ->dispatch();
+        Bus::chain($jobs)->dispatch();
 
         return $this->sagaRun;
     }
+
+
 }

@@ -4,10 +4,10 @@ namespace dayemsiddiqui\Saga;
 
 use dayemsiddiqui\Saga\Models\SagaStep as SagaStepModel;
 use dayemsiddiqui\Saga\Models\SagaStepStatus;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 
