@@ -21,9 +21,10 @@ You can install the package via composer:
 
 ```bash
 composer require dayemsiddiqui/laravel-saga
+php artisan your-package-name:install
 ```
 
-The migrations will run automatically when you install the package. If you need to run them manually, you can use:
+And then you can run:
 
 ```bash
 php artisan migrate
@@ -32,7 +33,7 @@ php artisan migrate
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-saga-config"
+php artisan vendor:publish --tag="saga-config"
 ```
 
 This is the contents of the published config file:
@@ -45,7 +46,7 @@ return [
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="laravel-saga-views"
+php artisan vendor:publish --tag="saga-views"
 ```
 
 ## Usage
