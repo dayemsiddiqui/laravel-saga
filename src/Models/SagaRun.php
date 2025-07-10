@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class SagaRun extends Model
 {
     protected $fillable = ['name', 'status', 'context'];
+
     protected $casts = [
         'context' => 'array',
     ];

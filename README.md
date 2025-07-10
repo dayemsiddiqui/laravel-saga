@@ -51,10 +51,54 @@ php artisan vendor:publish --tag="laravel-saga-views"
 
 ## Usage
 
+### 1. Create Your Saga Steps
+
+Each step in your saga should extend the `SagaStep` abstract class and implement the `run()` method:
+
 ```php
-$saga = new dayemsiddiqui\Saga();
-echo $saga->echoPhrase('Hello, dayemsiddiqui!');
+use dayemsiddiqui\Saga\SagaStep;
+
+class FirstStep extends SagaStep
+{
+    protected function run(): void
+    {
+        // Your business logic here
+        // You can access $this->context to share data between steps
+        $this->context()->set('foo', 'bar');
+    }
+}
+
+class SecondStep extends SagaStep
+{
+    protected function run(): void
+    {
+        // Access data from previous steps
+        $foo = $this->context()->get('foo');
+        // More business logic...
+    }
+}
 ```
+
+### 2. Run a Saga
+
+You can chain your steps and dispatch the saga like this:
+
+```php
+use dayemsiddiqui\Saga\Saga;
+
+// Optionally, use the facade: use Saga;
+
+$saga = Saga::named('My Example Saga')
+    ->chain([
+        FirstStep::class,
+        SecondStep::class,
+    ])
+    ->dispatch();
+```
+
+-   Each step will be executed in order.
+-   The saga and each step’s status will be tracked in the database.
+-   Use the `context()` helper to share data between steps.
 
 ## Testing
 
@@ -76,8 +120,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Dayem Siddiqui](https://github.com/dayemsiddiqui)
-- [All Contributors](../../contributors)
+-   [Dayem Siddiqui](https://github.com/dayemsiddiqui)
+-   [All Contributors](../../contributors)
 
 ## License
 

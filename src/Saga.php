@@ -2,27 +2,38 @@
 
 namespace dayemsiddiqui\Saga;
 
-
-use Illuminate\Support\Facades\Bus;
 use dayemsiddiqui\Saga\Models\SagaRun;
-use dayemsiddiqui\Saga\Models\SagaStep as SagaStepModel;
+use Illuminate\Support\Facades\Bus;
 
 class Saga
 {
     protected string $name = 'Unnamed Saga';
+
+    /** @var array<class-string<\dayemsiddiqui\Saga\SagaStep>> */
     protected array $jobClasses = [];
+
     protected ?SagaRun $sagaRun = null;
 
     public static function named(string $name): self
     {
-        $instance = new self();
+        $instance = new self;
         $instance->name = $name;
+
         return $instance;
     }
 
+    /**
+     * @param  array<class-string<\dayemsiddiqui\Saga\SagaStep>>  $jobs
+     */
     public function chain(array $jobs): self
     {
+        foreach ($jobs as $jobClass) {
+            if (! is_subclass_of($jobClass, \dayemsiddiqui\Saga\SagaStep::class)) {
+                throw new \InvalidArgumentException('All jobs must extend SagaStep');
+            }
+        }
         $this->jobClasses = $jobs;
+
         return $this;
     }
 
@@ -38,6 +49,7 @@ class Saga
                 'name' => class_basename($jobClass),
                 'status' => 'pending',
             ]);
+
             return new $jobClass($step);
         })->all();
 
@@ -49,4 +61,3 @@ class Saga
         return $this->sagaRun;
     }
 }
-
