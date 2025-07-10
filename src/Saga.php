@@ -66,6 +66,4 @@ class Saga
 
         return $this->sagaRun;
     }
-
-
 }

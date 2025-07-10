@@ -100,7 +100,54 @@ $saga = Saga::named('My Example Saga')
 -   The saga and each step’s status will be tracked in the database.
 -   Use the `context()` helper to share data between steps.
 
-## Testing
+### Testing your Sagas
+
+This package provides a fake implementation of the `Saga` facade that you can use in your tests to avoid actually dispatching the jobs.
+
+To use it, call `Saga::fake()` at the beginning of your test.
+
+```php
+use dayemsiddiqui\Saga\Saga;
+use Pest\Laravel\test;
+
+test('example saga is dispatched', function () {
+    Saga::fake();
+
+    // Run the code that dispatches your saga
+    // ...
+
+    Saga::assertDispatched('My Example Saga');
+});
+```
+
+#### `assertDispatched(string $name, ?array $steps = null)`
+
+Asserts that a saga with the given name was dispatched. You can also optionally assert that it was dispatched with a specific chain of steps.
+
+```php
+Saga::assertDispatched('My Example Saga', [
+    FirstStep::class,
+    SecondStep::class,
+]);
+```
+
+#### `assertNotDispatched(string $name)`
+
+Asserts that a saga with the given name was not dispatched.
+
+```php
+Saga::assertNotDispatched('Some Other Saga');
+```
+
+#### `assertDispatchedCount(int $count)`
+
+Asserts that a specific number of sagas were dispatched.
+
+```php
+Saga::assertDispatchedCount(1);
+```
+
+## Running Tests
 
 ```bash
 composer test
