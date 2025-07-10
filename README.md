@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/dayemsiddiqui/laravel-saga/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/dayemsiddiqui/laravel-saga/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/dayemsiddiqui/laravel-saga.svg?style=flat-square)](https://packagist.org/packages/dayemsiddiqui/laravel-saga)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+The Laravel Saga package helps you manage complex workflows by breaking them down into a series of sequential steps. It orchestrates these steps as a 'saga', executing them in order and tracking the progress of each one in your database. This gives you a clear and persistent overview of your long-running processes, like an e-commerce order flow or a video processing pipeline.
 
 ## Support us
 
