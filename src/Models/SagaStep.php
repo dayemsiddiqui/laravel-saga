@@ -5,6 +5,15 @@ namespace dayemsiddiqui\Saga\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $saga_run_id
+ * @property string $name
+ * @property SagaStepStatus $status
+ * @property string|null $error_message
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class SagaStep extends Model
 {
     protected $fillable = ['saga_run_id', 'name', 'status', 'error_message'];
