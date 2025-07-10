@@ -27,16 +27,14 @@ class SagaRun extends Model
         return $this->hasMany(SagaStep::class);
     }
 
-    public function currentStep(): ?SagaStep
+    public function startedSteps(): HasMany
     {
-        $step = $this->steps()->where('status', SagaStepStatus::PENDING)->first();
-
-        return $step ? new SagaStep($step->toArray()) : null;
+        return $this->steps()->where('status', SagaStepStatus::STARTED);
     }
 
-    public function doneSteps(): HasMany
+    public function completedSteps(): HasMany
     {
-        return $this->steps()->whereIn('status', [SagaStepStatus::COMPLETED, SagaStepStatus::FAILED]);
+        return $this->steps()->whereIn('status', [SagaStepStatus::COMPLETED]);
     }
 
     public function failedSteps(): HasMany
