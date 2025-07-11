@@ -46,4 +46,12 @@ class SagaRun extends Model
     {
         return $this->steps()->where('status', SagaStepStatus::PENDING);
     }
+
+    public function mergeContext(array $context): self
+    {
+        $this->context = array_merge($this->context, $context);
+        $this->save();
+
+        return $this;
+    }
 }

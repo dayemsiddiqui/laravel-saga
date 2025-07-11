@@ -31,6 +31,13 @@ class Saga
         return $instance;
     }
 
+    public function context(array $context): self
+    {
+        $this->sagaRun->mergeContext($context);
+
+        return $this;
+    }
+
     /**
      * @param  array<class-string<\dayemsiddiqui\Saga\SagaStep>>  $jobs
      */
