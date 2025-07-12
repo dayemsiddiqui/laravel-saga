@@ -15,6 +15,8 @@ class Saga
 
     protected ?SagaRun $sagaRun = null;
 
+    protected array $context = [];
+
     public static function fake(): SagaFake
     {
         $fake = new SagaFake;
@@ -33,7 +35,7 @@ class Saga
 
     public function context(array $context): self
     {
-        $this->sagaRun->mergeContext($context);
+        $this->context = $context;
 
         return $this;
     }
@@ -58,6 +60,7 @@ class Saga
         $this->sagaRun = SagaRun::create([
             'name' => $this->name,
             'status' => 'started',
+            'context' => $this->context,
         ]);
 
         $jobs = collect($this->jobClasses)->map(function ($jobClass) {
